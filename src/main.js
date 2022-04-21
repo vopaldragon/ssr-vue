@@ -1,27 +1,19 @@
-import { createSSRApp, defineComponent, h, markRaw } from "vue";
-import Page from "./Page.vue";
+import { createSSRApp, defineComponent, h, reactive } from "vue";
 import App from "./App.vue";
+import Page from "./Page.vue";
 
-let rootComponent;
+const props = reactive({ path: "" });
+
 export function createApp(path) {
+  props.path = path;
   const PageWithWrapper = defineComponent({
-    data: () => ({
-      path: markRaw({ path }),
-    }),
-    created() {
-      rootComponent = this;
-    },
     render() {
-      return h(
-        App,
-        {},
-        {
-          default: () => {
-            console.log("render", this.path);
-            return h(Page, this.path);
-          },
-        }
-      );
+      return h(App, props, {
+        default: (props) => {
+          console.log("render", props);
+          return h(Page, props);
+        },
+      });
     },
   });
   return createSSRApp(PageWithWrapper);
@@ -31,5 +23,5 @@ export function createApp(path) {
  * Client routing function
  */
 export function changePath(path) {
-  rootComponent.path = markRaw({ path });
+  props.path = path;
 }

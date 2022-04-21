@@ -70,11 +70,7 @@ async function createServer(
       const html = template.replace(`<!--app-html-->`, appHtml);
 
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
-    } catch (e) {
-      vite && vite.ssrFixStacktrace(e);
-      console.log(e.stack);
-      res.status(500).end(e.stack);
-    }
+    } catch (e) {}
   });
 
   return { app, vite };

@@ -16,4 +16,4 @@ click buttons and Prop is updaed.
 
 [http://localhost:3000/c](http://localhost:3000/c)
 
-click buttons but Prop is NOT updated.
+click buttons but Prop of Slot is NOT updated.
